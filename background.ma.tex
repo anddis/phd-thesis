@@ -1,0 +1,263 @@
+\section{Dose--response meta-analysis of aggregated data}
+\label{sec:drma}
+
+Individual epidemiologic studies on primary data usually report study findings regarding the dose--response association between a quantitative exposure and the risk of a binary disease in tabular form, as exemplified by table \ref{table:singlestudy}. The results presented in this fashion are obtained by categorizing the quantitative exposure in $J+1$ levels, which are then modeled with indicator variables keeping one exposure level as referent. The exposure-outcome association is expressed in terms of $J$ category-specific RRs.
+
+Generally, access to primary data for all the $K$ studies investigating a certain exposure-disease association is not possible. As a consequence, the only way to synthesize the existing information on the overall shape of the dose--response association, and to examine whether this shape is modified by study-level characteristics, is to use aggregated (summarized) data coming from the aforementioned study-specific tables.
+
+\begin{table}[]
+\centering
+\begin{threeparttable}
+\caption{Aggregated dose--response data for the $i$-th study}
+\label{table:singlestudy}
+\begin{tabular}{cccccc}
+\hline
+\multicolumn{1}{c}{{\bf Exposure level}} & \multicolumn{1}{c}{{\bf Assigned dose}} & \multicolumn{1}{c}{{\bf Cases}} & \multicolumn{1}{c}{{\bf n}\tnote{a}} & \multicolumn{1}{c}{{\bf RR}} & \multicolumn{1}{c}{{\bf 95\% CI}} \\ \hline
+0                                           & $x_{i0}$                                   & $c_{i0}$                           & $n_{i0}$                       & 1                                 & (ref)                                                \\
+1                                           & $x_{i1}$                                   & $c_{i1}$                           & $n_{i1}$                       & $\mathrm{RR}_{i1}$                         & $\underline{\mathrm{RR}}_{i1}, \overline{\mathrm{RR}}_{i1}$             \\
+$\vdots$                                    & $\vdots$                                & $\vdots$                        & $\vdots$                    & $\vdots$                                & $\vdots$                                           \\
+$J_i$                                         & $x_{iJ_i}$                                 & $c_{iJ_i}$                           & $n_{iJ_i}$                       & $\mathrm{RR}_{iJ_i}$                         & $\underline{\mathrm{RR}}_{iJ_i}, \overline{\mathrm{RR}}_{iJ_i}$             \\ \hline
+\end{tabular}
+\begin{tablenotes}
+\item [a] \footnotesize Depending on the study design, this column reports person-years, total number of subjects, or number of non-cases.
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+The common approach to dose--response meta-analysis is based on a two-stage procedure. In the first stage the  dose--response associations are estimated for each of the $K$ studies, while in the second stage the study-specific parameters defining the dose--response relations are combined using methods for multivariate meta-analysis.
+
+\subsection{First stage: study-specific dose--response models}  
+
+\subsubsection{Study-specific regression models}
+
+In the first stage, for each of the $K$ studies included in the meta-analysis ($i=1,\ldots,K$), the dose--response relation between the quantitative exposure and the log--relative risks (logRRs) is estimated based on the published aggregated data \citep{greenland_methods_1992, berlin_metaanalysis_1993, orsini_generalized_2006}. This is done by means of the following linear model:
+\begin{equation}
+\mathbf{y}_i = \mathbf{X}_i \boldsymbol{\beta}_i + \boldsymbol{\epsilon}_i.
+\label{eq:firststage}
+\end{equation}
+
+The vector $\mathbf{y}_i$ contains the logRR estimates for all the $J_i$ non-referent exposure categories, while $\mathbf{X}_i$ is the $(J_i \times q)$ design matrix containing the assigned doses relative to the non-referent exposure categories and/or some flexible dose transformations.  Specifically, the design matrix $\mathbf{X}_i$ is defined as follows:
+\begin{equation*}
+\mathbf{X}_i =
+	\begin{bmatrix}
+		g_1(x_{i1})-g_1(x_{i0}) & \cdots & g_q(x_{i1})-g_q(x_{i0}) \\
+		\vdots & & \vdots \\
+		g_1(x_{iJ_i})-g_1(x_{i0}) & \cdots & g_q(x_{iJ_i})-g_q(x_{i0}) \\
+	\end{bmatrix}.
+\end{equation*}
+For example, for a simple linear trend ($q=1$)
+\begin{equation*}
+\mathbf{X}_i =
+	\begin{bmatrix}
+		x_{i1}-x_{i0}  \\
+		\vdots  \\
+		x_{iJ_i}-x_{i0} \\
+	\end{bmatrix},
+\end{equation*}
+while for a quadratic polynomial model ($q=2$)
+\begin{equation*}
+\mathbf{X}_i =
+	\begin{bmatrix}
+		x_{i1}-x_{i0} &  x_{i1}^2-x_{i0}^2 \\
+		\vdots &  \vdots \\ 
+		x_{iJ_i}-x_{i0} &  x_{iJ_i}^2-x_{i0}^2 \\
+	\end{bmatrix}.
+\end{equation*}
+
+Note that the design matrix does not include the intercept, as the logRR for the referent exposure value $x_{0i}$ is equal to 0 ($\mathrm{RR}=1$) --- that is, the regression line must pass trough the origin. It is also important to underline the absence of the subscript $i$ from the exposure transformation functions $g_1(\cdot), \ldots, g_q(\cdot)$. This is because the same exposure transformations must be used for all the $K$ studies, as it will become apparent later on, when discussing the second stage.
+
+Lastly, $\boldsymbol{\beta}_i$ is a vector of unknown regression coefficients of length $q$, defining the study-specific dose--response association.
+
+\subsubsection{Approximation of the covariances between log--relative risks}
+
+The error terms $\boldsymbol{\epsilon}_i$ are heteroskedastic, as the individual logRRs are not estimated with equal precision.  Furthermore, a particular characteristic of model (\ref{eq:firststage}) is that the error terms are correlated, since the non-referent logRRs share a common reference group. This implies that the variance-covariance matrix of the error terms for the $i$-th study is equal to the  following symmetric matrix
+\begin{equation*}
+\Cov(\boldsymbol{\epsilon}_i) = \mathbf{S}_i =
+	\begin{bmatrix}
+		\sigma_{i11}^2 & & & & \\
+		\vdots & \ddots & & & \\
+		\sigma_{ij1} &  & \sigma_{ijj}^2 \\
+		\vdots & & & \ddots \\
+		\sigma_{iJ_{i}1} & \cdots & \sigma_{iJ_{i}j} & \cdots & \sigma_{iJ_iJ_i}^2
+	\end{bmatrix}.
+\end{equation*}
+
+Generally, the covariances between logRRs will be different from zero, and two different methods to approximate them using aggregated data only have been proposed  \citep{greenland_methods_1992, hamling_facilitating_2008}. These methods require information about the number of cases and, depending on the study design, person-years/number of subjects/number of non-cases for each exposure level. An empirical evaluation of these approximations and a comparison between their underlying assumptions have been presented by \citet{orsini_metaanalysis_2012}. %However, the assumptions made by these two methods are still more reasonable than assuming that the logRRs are uncorrelated. 
+Lastly, the variances on the diagonal can be easily back calculated from the 95\% CIs for the RRs as 
+\begin{equation*}
+\sigma_{ijj}^2 = \left[ \frac{\log(\overline{\mathrm{RR}}_{ij})-\log(\underline{\mathrm{RR}}_{ij})}{2 \times 1.96} \right]^2.
+\end{equation*}
+
+\subsubsection{Estimation}
+
+The matrix $\mathbf{S}_i$, which is treated as known, is used to efficiently estimate the coefficient vector $\boldsymbol{\beta}_i$ and its variance-covariance matrix $\mathbf{V}(\boldsymbol{\beta}_i)$ using the Generalized Least Squares (GLS) estimator:
+\begin{align*}
+\hat{\boldsymbol{\beta}}_i &= \left(\mathbf{X}_i^\top \mathbf{S}_i^{-1} \mathbf{X}_i \right)^{-1} \mathbf{X}_i^\top  \mathbf{S}_i^{-1} \mathbf{y}_i \\
+\hat{\mathbf{V}}(\boldsymbol{\beta}_i) &= \left(\mathbf{X}_i^\top \mathbf{S}_i^{-1} \mathbf{X}_i \right)^{-1}.
+\end{align*}
+
+If one assumes independence between the logRRs, the off-diagonal elements of $\mathbf{S}_i$ are set to 0, and the Weighted Least Square (WLS) estimator is used to estimate $\boldsymbol{\beta}_i$ and $\mathbf{V}(\boldsymbol{\beta}_i)$.
+
+\subsubsection{Example of differences in results using primary data, WLS, and GLS}
+
+An example of the possible consequences related to ignoring the covariance between logRRs is illustrated next.
+
+The aggregated data presented in table \ref{table:examplecorr} is based on the analysis of actual primary data, where the association between a certain quantitative exposure and the IR of a disease was investigated. The Incidence Rate Ratio (IRR) for every 1-unit increase in the exposure was  0.918 (95\% CI: 0.868--0.971), as estimated from primary data. This is the linear trend that one would like to ``reconstruct'' using only summarized data. 
+
+Setting the off-diagonal elements of  $\mathbf{S}$ equal to 0, the IRR estimated from aggregated data using WLS was equal to 1.066 (95\% CI: 1.000--1.135), wrongly identifying the direction of the association. On the other hand, the IRR estimated approximating the covariances and employing the GLS estimator was 0.922 (95\% CI: 0.865--0.983), very close to the IRR calculated from primary data.  
+
+\begin{table}[ht]
+\centering
+\begin{adjustbox}{max width=\textwidth}
+\begin{threeparttable}
+\caption{Example data in aggregated form as reported by a single study}
+\label{table:examplecorr}
+\begin{tabular}{cccccc}
+\hline
+{\bf Exposure category} & {\bf Assigned dose}\tnote{a} & {\bf Cases} & {\bf Person-years} & {\bf IRR}  & {\bf 95\% CI} \\ \hline
+$<4.2$                  & 4.0                 & 128         & 21,937             & 1.00		  & (ref)           \\
+4.2--4.6                & 4.4                 & 463         & 63,153             & 1.26       & 1.03--1.53    \\
+4.6--5.0                & 4.8                 & 838         & 118,327            & 1.21       & 1.01--1.46    \\
+5.0--5.5                & 5.2                 & 973         & 139,864            & 1.19       & 0.99--1.43    \\
+5.5--6.0                & 5.7                 & 456         & 69,412             & 1.12       & 0.92--1.37    \\
+$\ge 6.0$               & 6.3                 & 244         & 43,629             & 0.96       & 0.77--1.19    \\ \hline
+\end{tabular}
+\begin{tablenotes}
+\item [a] \footnotesize The reported assigned doses are the category-specific median values calculated from primary data. 
+\end{tablenotes}
+\end{threeparttable}
+\end{adjustbox}
+\end{table}
+
+
+\subsection{Second stage: multivariate meta-analysis}
+
+In the second stage, the estimated  vectors of study-specific regression coefficients are pooled using methods for multivariate meta-analysis \citep{berkey_metaanalysis_1998, vanhouwelingen_advanced_2002, jackson_extending_2010, jackson_multivariate_2011, gasparrini_multivariate_2012}.\footnote{Multivariate random-effect meta-analysis was first introduced by \citet*{vanhouwelingen_bivariate_1993}.}
+
+\subsubsection{The multivariate model}
+
+The result of the first stage is a set of $K$ vectors of regression coefficients $\hat{\boldsymbol{\beta}}_i$ of length $q$, and the relative $(q \times q)$ estimated variance-covariance matrices $\hat{\mathbf{V}}(\boldsymbol{\beta}_i)$. The vectors $\hat{\boldsymbol{\beta}}_i$ are now used as outcomes in a random-effect multivariate meta-analysis model
+\begin{equation}
+\hat{\boldsymbol{\beta}}_i \sim \N_q \left(\boldsymbol{\theta}, \hat{\mathbf{V}}(\boldsymbol{\beta}_i) + \boldsymbol{\Psi} \right).
+\label{eq:secondstage}
+\end{equation}
+
+The marginal model shown in (\ref{eq:secondstage}) has independent within- $(\hat{\mathbf{V}}(\boldsymbol{\beta}_i))$ and between-study components $(\boldsymbol{\Psi})$, with $\hat{\mathbf{V}}(\boldsymbol{\beta}_i) + \boldsymbol{\Psi} = \boldsymbol{\Sigma}_i$. In particular, in the within-study component, the estimated $\hat{\boldsymbol{\beta}}_i$ is assumed to be sampled with error from $\N_q(\boldsymbol{\beta}_i,\mathbf{V}(\boldsymbol{\beta}_i))$ --- that is, a $q$-variate normal distribution where $\boldsymbol{\beta}_i$  is the vector of true unknown dose--response  coefficients for the $i$-th study. On the other hand, in the between-study component, $\boldsymbol{\beta}_i$ is assumed sampled from $\N_q(\boldsymbol{\theta},\boldsymbol{\Psi})$, where $\boldsymbol{\Psi}$ is the unknown $(q\times q)$ between-study variance-covariance matrix. The vector $\boldsymbol{\theta}$ can be interpreted as the population-average outcome parameters, which are the coefficients defining the population-average dose--response relation.
+
+Some considerations regarding model (\ref{eq:secondstage}) can be made. First, in contrast to the setting where multivariate meta-analysis is used to analyze diagnostic test accuracy or multiple outcomes simultaneously \citep{arends_combining_2003}, in the present setting it is not necessary for the model parameters to be individually interpretable, rather the pooled dose--response association is described by their joint distribution. Second, if $q=1$ the model reduces to a univariate random-effect meta-analytical model. Third, assuming that $\boldsymbol{\Sigma}_i = \mathbf{V}(\boldsymbol{\beta}_i)$  --- that is, no between-study variability --- the model becomes a fixed-effect model.  
+
+\subsubsection{Multivariate meta-regression}
+
+When the shape of the dose--response association differs according to study-level covariates (for example, study location or study design), model (\ref{eq:secondstage}) can be extended to multivariate meta-regression \citep{vanhouwelingen_advanced_2002, gasparrini_multivariate_2012}. This means that the $q$ outcomes of the second stage are modeled in terms of $m$ study-level covariates $\mathbf{z}_i=(z_{i1},\ldots,z_{im})$ (generally including an intercept) associated with the $i$-th study
+\begin{equation}
+\hat{\boldsymbol{\beta}}_i \sim \N_q \left( \mathbf{Z}_i \boldsymbol{\theta}, \hat{\mathbf{V}}(\boldsymbol{\beta}_i) + \boldsymbol{\Psi} \right).
+\label{eq:secondstagemetareg}
+\end{equation}
+
+The matrix $\boldsymbol{Z}_i$ is a $(q \times qm)$ block-diagonal matrix of full rank and is derived by taking the Kronecker product between an identity matrix of dimension $q$ $(\mathbf{I}_{(q)})$ and the vector $\mathbf{z}_i$, such that
+\begin{equation*}
+\underset{q \times qm}{\mathbf{Z}_i} = \underset{q\times q}{\mathbf{I}_{(q)}} \otimes \underset{1 \times m}{\mathbf{z}_i^\top} = 
+	\begin{bmatrix}
+		1 & z_{i2} & \cdots & z_{im} & \cdots & 0 & 0 & \cdots & 0 \\
+		\vdots &  &  &  & \ddots & &  &  &  \\
+		0 & 0 & \cdots & 0 & \cdots & 1 & z_{i2} & \cdots & z_{im} \\
+	\end{bmatrix},
+\end{equation*}
+where $z_{i1} = 1$ is the intercept term. For example, suppose that the dose--response association is modeled using a quadratic polynomial ($q=2$) and that the only study-covariate of interest is a binary variable indicating whether the $i$-th study was conducted in Sweden [$\mathbf{z}_i=(1,1)$] or not [$\mathbf{z}_i=(1,0)$]. The matrix $\mathbf{Z}_i$ for a study conducted in Sweden is therefore
+\begin{equation*}
+\underset{}{\mathbf{Z}_i} = \underset{}{\mathbf{I}_{(2)}} \otimes \underset{}{\mathbf{z}_i^\top} = 
+	\begin{bmatrix}
+		1 & 0 \\
+		0 & 1
+	\end{bmatrix} \otimes
+	(1,1)=
+	\begin{bmatrix}
+		1 & 1  & 0 & 0 \\
+		0 & 0 & 1 & 1 \\
+	\end{bmatrix},
+\end{equation*}
+while for a study conducted elsewhere it is
+\begin{equation*}
+\underset{}{\mathbf{Z}_i} = \underset{}{\mathbf{I}_{(2)}} \otimes \underset{}{\mathbf{z}_i^\top} = 
+	\begin{bmatrix}
+		1 & 0 \\
+		0 & 1
+	\end{bmatrix} \otimes
+	(1,0)=
+	\begin{bmatrix}
+		1 & 0  & 0 & 0 \\
+		0 & 0 & 1 & 0 \\
+	\end{bmatrix}.
+\end{equation*}
+
+The coefficient vector $\boldsymbol{\theta}$ is now of length $qm$ and defines the association between the $q$ outcomes and the $m$ study-level covariates. The $q$ coefficients in $\boldsymbol{\theta}$ related to the intercept terms are interpreted as the population-average outcome parameters for those studies characterized by a zero value of study-level covariates. The remaining $(qm-q)$ coefficients express how the population-average outcome parameters vary in respect to the values taken by the study-level covariates.
+
+\subsubsection{Estimation}
+Different estimation methods have been proposed for random-effect multivariate meta-analysis, including likelihood-based methods and method of moments. The goal is to estimate the $qm$ model parameters $\boldsymbol{\theta}$ and the  parameters  $\boldsymbol{\psi}$ of the between-study variance-covariance matrix $\boldsymbol{\Psi}$ [$q(q+1)/2$ parameters if no structure for $\boldsymbol{\Psi}$ is assumed]. 
+
+ML estimates of $\boldsymbol{\theta}$ and $\boldsymbol{\psi}$ can be obtained simultaneously by numerically maximizing the log-likelihood function of the marginal model (\ref{eq:secondstagemetareg}), subject to the constraint that $\boldsymbol{\Psi}$ is positive semi-definite \citep{white_multivariate_2011}. Under the common assumption that the $K$ studies are independent, the log-likelihood function is proportional to the logarithm of the product of $K$ $q$-variate normal densities:
+\begin{equation} 
+l(\boldsymbol{\theta}, \boldsymbol{\psi};\hat{\boldsymbol{\beta}}_i,\hat{\mathbf{V}}(\boldsymbol{\beta}_i),\mathbf{Z}_i) = -\frac{1}{2} \sum_{i=1}^K \log | \boldsymbol{\Sigma}_i | - \frac{1}{2} \sum_{i=1}^K \left[ \left(\hat{\boldsymbol{\beta}}_i - \mathbf{Z}_i \boldsymbol{\theta} \right)^\top \boldsymbol{\Sigma}_i^{-1} \left(\hat{\boldsymbol{\beta}}_i - \mathbf{Z}_i \boldsymbol{\theta} \right) \right]. 
+\label{eq:loglikmetaanal}
+\end{equation}
+
+Assuming that the elements of $\boldsymbol{\Psi}$ are known, the parameter vector $\boldsymbol{\theta}$ and its accompanying variance-covariance matrix $\mathbf{V}(\boldsymbol{\theta})$ can be estimated, conditional on $\boldsymbol{\psi}$, by maximizing (\ref{eq:loglikmetaanal}). In this case, closed-form equations are given by the GLS estimator
+\begin{align}
+\hat{\boldsymbol{\theta}} &= \left( \sum_{i=1}^{K} \mathbf{Z}_i^\top \hat{\mathbf{V}}(\boldsymbol{\beta}_i)^{-1} \mathbf{Z}_i \right)^{-1} \sum_{i=1}^{K} \mathbf{Z}_i^\top \hat{\mathbf{V}}(\boldsymbol{\beta}_i)^{-1} \hat{\boldsymbol{\beta}}_i  \label{eq:gls} \\
+\hat{\mathbf{V}}(\boldsymbol{\theta}) &=  \left( \sum_{i=1}^{K} \mathbf{Z}_i^\top \hat{\mathbf{V}}(\boldsymbol{\beta}_i)^{-1} \mathbf{Z}_i \right)^{-1}. \label{eq:glsv}
+\end{align}
+
+To avoid the downward bias of ML estimates of $\boldsymbol{\psi}$, the parameters of the between-study variance-covariance matrix can be estimated using Restricted Maximum Likelihood (REML) \citep{white_multivariate_2011}. This bias is due to the fact that ML does not account for the loss of degrees of freedom from the estimation of $\boldsymbol{\theta}$. REML estimation is carried out by iteratively maximizing the following restricted log-likelihood,  which is a function of $\boldsymbol{\psi}$ only and is proportional to:
+\begin{align*}
+\begin{split}
+l_{\mathrm{REML}}(\boldsymbol{\psi};\hat{\boldsymbol{\beta}}_i,\hat{\mathbf{V}}(\boldsymbol{\beta}_i),\mathbf{Z}_i, \hat{\boldsymbol{\theta}}) = &-\frac{1}{2} \sum_{i=1}^K \log | \boldsymbol{\Sigma}_i | -\frac{1}{2}  \log \bigg| \sum_{i=1}^K \mathbf{Z}_i^\top \boldsymbol{\Sigma}_i^{-1} \mathbf{Z}_i \bigg| \\
+ &- \frac{1}{2} \sum_{i=1}^K \left[ \left(\hat{\boldsymbol{\beta}}_i - \mathbf{Z}_i \hat{\boldsymbol{\theta}} \right)^\top \boldsymbol{\Sigma}_i^{-1} \left(\hat{\boldsymbol{\beta}}_i - \mathbf{Z}_i \hat{\boldsymbol{\theta}} \right) \right], 
+\end{split}
+\end{align*}
+where $\hat{\boldsymbol{\theta}}$ is obtained from (\ref{eq:gls}).
+
+Lastly, a less computationally intensive method for multivariate meta-analysis is based on the extension of the univariate method of moments proposed by \citet{dersimonian_metaanalysis_1986} to the multivariate scenario \citep{jackson_extending_2010}. Moreover, since the estimating procedure for the parameters of $\boldsymbol{\Psi}$ is based on moments arguments only, the assumption of between-study normality is not necessary. %Therefore, a valid meta-analysis can be carried out even if this assumption is not met. On the other hand, however, if the between-study normality is satisfied, the meta-analysis is not fully efficient. %TODO: togliere MM?
+
+
+Note that if one assumes that $\boldsymbol{\Sigma}_i = \mathbf{V}(\boldsymbol{\beta}_i)$, the parameter vector $\boldsymbol{\theta}$ and its  variance-covariance matrix $\mathbf{V}(\boldsymbol{\theta})$ can be estimated using (\ref{eq:gls}) and (\ref{eq:glsv}), repsectively.
+
+ 
+
+\subsubsection{Between-study heterogeneity}
+Meta-regression can be employed to identify sources of variation in study findings and for this reason it can help explaining heterogeneity in the dose--response associations across studies. The hypothesis of no heterogeneity between studies beyond that explained by sampling variability and study-level covariates can be tested by means of the multivariate extension of the Cochran $Q$ test \citep{ritz_multivariate_2008, jackson_quantifying_2012}. Formally, the null hypothesis is $H_0: \boldsymbol{\Psi} = \mathbf{0}$ and the test statistic is defined as
+\begin{equation}
+	Q= \sum_{i=1}^K \left[\left(\hat{\boldsymbol{\beta}}_i - \mathbf{Z}_i \hat{\boldsymbol{\theta}} \right)^\top  \hat{\mathbf{V}}(\boldsymbol{\beta}_i)^{-1} \left(\hat{\boldsymbol{\beta}}_i - \mathbf{Z}_i \hat{\boldsymbol{\theta}} \right) \right],
+	\label{eq:multiq}
+\end{equation}
+where $\hat{\boldsymbol{\theta}}$ is estimated using a fixed-effect model. Under the null hypothesis, the $Q$ follows asymptotically a chi-square distribution with $(Kq-qm)$ degrees of freedom. This statistic reduces to the classic $Q$ statistic if $q=1$ \citep{cochran_combination_1954}.
+
+Furthermore, the multivariate extension of the $I^2$ statistic proposed by \citet{jackson_quantifying_2012} can be used to measure the percentage of total variability attributable to between-study heterogeneity, analogously to the univariate case \citep{higgins_quantifying_2002}. The $I^2$ index is defined as
+\begin{equation}
+I^2 = \max\left(0, \frac{Q - (Km - qm)}{Q}\right)\times 100\%.
+\label{eq:multii2}
+\end{equation}
+
+
+Both the $Q$ test and the $I^2$ index have some limitations. The $Q$ test, in particular, has been shown to suffer from low power when the number of studies is small or the ``total information'' is limited \citep{hardy_detecting_1998}. On the other hand, the $I^2$ has been criticized for being dependent on precision of the estimates from the first-stage regression models \citep{rucker_undue_2008}.
+
+\subsubsection{Prediction of the population-average dose--response association}
+The prediction of the population-average dose--response association is a crucial step to display the results in tabular and in graphical form. In particular, the goal is to present how the risk of the disease varies according to levels of the quantitative exposure, choosing a particular exposure value as the referent (for example, a specific BMI value or no alcohol consumption). Moreover, in the presence of study-level covariates, one is interested in showing how they modify the overall dose--response association.
+
+Let $\mathbf{X}$ be the $(v \times q)$ first-stage design matrix evaluated at an arbitrary number $v$ of exposure doses, and let $\mathbf{X}_{\mathrm{ref}}$ be the same design matrix evaluated at the chosen reference level. Furthermore, let $\mathbf{z}$ be the $(m \times 1)$ vector containing the study-level covariates fixed at a particular level. The $(v \times 1)$ vector of predicted RRs conditional on a certain study-level covariate pattern is given by
+\begin{equation*}
+\underset{v\times 1}{\widehat{\mathbf{RR}}} = \exp \left[ \left(\underset{v\times q}{\mathbf{X}} - \underset{v\times q}{\mathbf{X}_{\mathrm{ref}}} \right) \left( \underset{q\times qm}{\mathbf{I}_{(q)} \otimes \mathbf{z}^\top} \right) \underset{qm \times 1}{\hat{\boldsymbol{\theta}}} \right].
+\end{equation*}
+
+The $100(1-\alpha)$\% confidence interval for the predicted pooled dose--response curve is obtained as
+\begin{equation*}
+\exp \left\{ \log\left( \widehat{\mathbf{RR}} \right) \pm z_{1-\frac{\alpha}{2}} \diag \left[ \left(\left(\mathbf{X} - \mathbf{X}_{\mathrm{ref}} \right) \mathbf{Z}\right) \hat{\mathbf{V}}(\boldsymbol{\theta}) \left(\left(\mathbf{X} - \mathbf{X}_{\mathrm{ref}} \right) \mathbf{Z}\right)^\top \right]^{\frac{1}{2}} \right\}, 
+\end{equation*}
+where $\hat{\mathbf{V}}(\boldsymbol{\theta})$ is the $(qm \times qm)$ estimated variance-covariance matrix relative to ${\hat{\boldsymbol{\theta}}}$, and $z_{1-\alpha/2}$ is the $(1-\alpha/2)$ quantile of a standard normal distribution.
+
+
+\subsubsection{Goodness of fit}
+
+The last step of a dose--response meta-analysis should be the evaluation of its goodness of fit. However, despite the importance of assessing whether the posited dose--response models provide an adequate description of the available aggregated data, this is rarely, if ever, done in practice. \citetalias{discacciati_goodness_2015} will present 3 tools to evaluate the goodness of fit of a dose--response meta-analysis, while taking into account the correlation among the logRRs. 
+
+
+

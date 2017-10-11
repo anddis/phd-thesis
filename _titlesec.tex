@@ -1,0 +1,24 @@
+% ---------------------------------------------------------
+% Project: PhD KAPPA
+% File: _titlesec.tex
+% Author: Andrea Discacciati
+%
+% Purpose: Headings format
+%			(see titlesec package)
+% ---------------------------------------------------------
+
+\titleformat{\section}[hang]{
+    \usefont{OT1}{qhv}{bx}{n}\selectfont}
+    {} 
+    {0em}
+    {\hspace{-0.4pt}\Large \thesection\hspace{0.6em}}
+\titleformat{\subsection}[hang]{
+    \usefont{OT1}{qhv}{bx}{n}\selectfont}
+    {} 
+    {0em}
+    {\hspace{-4pt} \thesubsection\hspace{0.6em}}
+\titleformat{\subsubsection}[hang]{
+    \usefont{OT1}{qhv}{bx}{n}\selectfont}
+    {} 
+    {0em}
+    {\normalsize}

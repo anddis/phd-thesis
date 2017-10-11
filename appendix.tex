@@ -1,0 +1,120 @@
+% ---------------------------------------------------------
+% Project: PhD KAPPA
+% File: appendix.tex
+% Author: Andrea Discacciati
+%
+% Purpose: Appendix
+% ---------------------------------------------------------
+
+\chapter{Supplementary figures}
+
+\begin{sidewaysfigure}
+\centering
+\includegraphics[width=\linewidth]{figures/appendix_ir_cosm.pdf}
+\caption[Incidence rate of prostate cancer in the COSM by calendar year, attained age, and enrollment county]{Incidence rate of prostate cancer in the COSM, conditional on calendar year, attained age, and enrollment county (Västmanland/Örebro). The red line is the model-based predicted incidence rate for Västmanland county. The blue line is the model-based predicted incidence rate for Örebro county. The IRs between the 2 counties are forced to be proportional within calendar year. The $p_{\textrm{heterogeneity}}$ of the $\mathrm{IRR}_{\textrm{Västmanland vs. Örebro}}$ by calendar year was less than 0.001.}
+\label{fig:appendix_ir_cosm}
+\end{sidewaysfigure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\linewidth]{figures/smr_cage.pdf}
+\caption[Standardized Mortality Ratio of prostate cancer by attained age]{SMRs of prostate cancer by attained age. The solid line is the model-based predicted SMR, while dashed lines are 95\% confidence intervals. The hollow circles represent the observed SMRs by 5-year categories of attained age together with 95\% confidence intervals. The confidence interval for $\SMR_{2, \LargerCdot}$ was not displayed since extremely wide, as it was based on 1 death only. Moreover, given that no deaths were observed in the category 45--49 years of attained age, the graph starts at age 50 years (see Table \ref{table:appendix_smr_table}). The vertical axis is on the natural log scale.}
+\label{fig:appendix_smr_cage}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=.8\linewidth]{figures/paper1_30.pdf}
+\caption[Associations of BMI at age 30 years with localized, advanced, and fatal prostate cancer]{Multivariable-adjusted associations of BMI at age 30 years (\kgmsq) with IR of localized and advanced prostate cancer, and with MR of fatal prostate cancer in the updated analysis of \citetalias{discacciati_body_2011}. BMI was modeled using RCS with 4 knots (blue line) and linearly (red line).  The referent value was set at 22 \kgmsq. Vertical lines above the curves represent cases of prostate cancer. The vertical axes are on the natural log scale.}
+\label{fig:paper1_30}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\linewidth]{figures/ss_adv1.pdf}
+\caption[Study-specific dose--response associations between BMI and incidence of advanced prostate cancer]{Study-specific dose--response associations between BMI and incidence of advanced prostate cancer in the updated meta-analysis including 18 prospective studies. BMI was modeled using RCS with 3 knots positioned at the 10th, 50th, and 90th percentiles of the overall BMI distribution (blue line) and in a linear fashion (red line). Dashed black lines represent the 95\% CI for the RCS models. The vertical axes are on the natural log scale. Figure continued on next page.}
+\label{fig:ss_adv}
+\end{figure}
+
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\linewidth]{figures/ss_adv2.pdf}
+\end{figure}
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\linewidth]{figures/fp_adv.pdf}
+\caption[Forest plot for the association between BMI and incidence of advanced prostate cancer]{RRs of advanced prostate cancer for every 5-unit increment in BMI for the updated dose--response meta-analysis on 18 prospective studies. The size of each square is proportional to the weight of the study (inverse of within- plus between-study variances)}
+\label{fig:fp_adv}
+\end{figure}
+
+%--tables
+\chapter{Supplementary tables}
+
+\begin{table}
+\caption[Observed and expected number of prostate cancer cases in the COSM by calendar year and attained age]{Observed number of incident prostate cancer cases in the COSM by calendar year and attained age (top entry), and expected number of cases obtained by applying Swedish national rates to the COSM calendar-year and age structure (bottom entry).}
+\centering
+\begin{stlog}
+{\input{sir.table.log.tex}\nullskip}
+\end{stlog}
+\label{table:appendix_sir_table}
+\end{table}
+
+
+\begin{table}
+\caption[Observed and expected number of prostate cancer deaths in the COSM by calendar year and attained age]{Observed number of prostate cancer deaths in the COSM by calendar year and attained age (top entry), and expected number of deaths obtained by applying Swedish national rates to the COSM calendar-year and age structure (bottom entry).}
+\centering
+\begin{stlog}
+{\input{smr.table.log.tex}\nullskip}
+\end{stlog}
+\label{table:appendix_smr_table}
+\end{table}
+
+\begin{sidewaystable}[]
+\centering
+\caption[Associations between categories of BMI at baseline age and localized, advanced, and fatal prostate cancer]{Multivariable-adjusted IRRs of localized and advanced prostate cancer, and MRRs of fatal prostate cancer by categories of BMI at baseline age in the updated analysis of \citetalias{discacciati_body_2011}.}
+\label{table:paper1_1997}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lccccccc}
+\hline
+\multicolumn{8}{c}{{\bf BMI at baseline age, \kgmsq{}}}                                                                                                                                                                                                       \\ \hline
+                                & {\bf \textless 21.0}         & {\bf 21.0--22.9}     & {\bf 23.0--24.9}     & {\bf 25.0--27.4}     & {\bf 27.5--29.9}     & {\bf $\ge$ 30.0}       & {\bf \begin{tabular}[c]{@{}c@{}}For every \\ 5-unit BMI\\ increment\end{tabular}} \\ \hline
+{\bf Localized prostate cancer} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{}                                                              \\
+No. of cases/person-years       & 84/21,290            & 323/61,897           & 532/115,888          & 651/136,921          & 283/68,009           & 164/42,705           & \multicolumn{1}{l}{}                                                              \\
+IRR (95\% CI)                   & 0.77 (0.60--0.98)    & 1 (ref)              & 0.89 (0.77--1.02)    & 0.92 (0.79--1.06)    & 0.80 (0.67--0.95)    & 0.79 (0.64--0.98)    & ---                                                                               \\
+                                &                      &                      &                      &                      &                      &                      &                                                                                   \\
+{\bf Advanced prostate cancer}  &                      &                      &                      &                      &                      &                      &                                                                                   \\
+No. of cases/person-years       & 30/21,290            & 91/61,897            & 208/115,888          & 202/136,921          & 111/68,009           & 65/42,705            &                                                                                   \\
+IRR (95\% CI)                   & 0.89 (0.58--1.34)    & 1 (ref)              & 1.25 (0.98--1.61)    & 1.06 (0.82--1.37)    & 1.23 (0.91--1.65)    & 1.35 (0.95--1.92)    & 1.11 (0.96--1.27)                                                                 \\
+                                &                      &                      &                      &                      &                      &                      &                                                                                   \\
+{\bf Fatal prostate cancer}     &                      &                      &                      &                      &                      &                      &                                                                                   \\
+No. of cases/person-years       & 25/23,153            & 77/68,197            & 136/127,667          & 137/150,490          & 75/74,306            & 45/36,362            &                                                                                   \\
+MRR (95\% CI)                   & 0.85 (0.54--1.35)    & 1 (ref)              & 1.00 (0.76--1.33)    & 0.92 (0.69--1.23)    & 1.10 (0.78--1.54)    & 1.25 (0.83--1.89)    & 1.12 (0.95--1.32)                                                                 \\ \hline
+\end{tabular}
+\end{adjustbox}
+\end{sidewaystable}
+
+\begin{sidewaystable}[]
+\centering
+\caption[Associations between categories of BMI at age 30 years and localized, advanced, and fatal prostate cancer]{Multivariable-adjusted IRRs of localized and advanced prostate cancer, and MRRs of fatal prostate cancer by categories of BMI at age 30 years in the updated analysis of \citetalias{discacciati_body_2011}.}
+\label{table:paper1_30}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lccccccc}
+\hline
+\multicolumn{8}{c}{{\bf BMI at age 30 years, \kgmsq{}}}                                                                                                                                                                                                      \\ \hline
+                                & {\bf \textless 21.0} & {\bf 21.0--22.9}     & {\bf 23.0--24.9}     & {\bf 25.0--27.4}     & {\bf 27.5--29.9}     & {\bf $\ge$ 30.0}       & {\bf \begin{tabular}[c]{@{}c@{}}For every \\ 5-unit BMI\\ increment\end{tabular}} \\ \hline
+{\bf Localized prostate cancer} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{} & \multicolumn{1}{l}{}                                                              \\
+No. of cases/person-years       & 391/81,774           & 714/144,676          & 631/139,388          & 220/59,843           & 61/13,895            & 20/7,133             & \multicolumn{1}{l}{}                                                              \\
+IRR (95\% CI)                   & 0.94 (0.82--1.07)    & 1 (ref)              & 0.97 (0.87--1.08)    & 0.88 (0.75--1.04)    & 1.14 (0.87--1.50)    & 0.77 (0.48--1.21)    & 1.00 (0.90--1.12)                                                                 \\
+                                &                      &                      &                      &                      &                      &                      &                                                                                   \\
+{\bf Advanced prostate cancer}  &                      &                      &                      &                      &                      &                      &                                                                                   \\
+No. of cases/person-years       & 133/81,774           & 247/144,676          & 220/139,388          & 86/59,843            & 14/13,895             & 7/7,133              &                                                                                   \\
+IRR (95\% CI)                   & 0.97 (0.58--1.34)    & 1 (ref)              & 0.93 (0.77--1.12)    & 0.96 (0.74--1.24)    & 0.74 (0.43--1.29)    & 0.75 (0.35--1.61)    & 0.92 (0.77--1.10)                                                                 \\
+                                &                      &                      &                      &                      &                      &                      &                                                                                   \\
+{\bf Fatal prostate cancer}     &                      &                      &                      &                      &                      &                      &                                                                                   \\
+No. of cases/person-years       & 103/89,861           & 172/159,460          & 153/152,789          & 50/65,330            & 11/15,145            & 6/7,691              &                                                                                   \\
+MRR (95\% CI)                   & 1.08 (0.84--1.39)    & 1 (ref)              & 0.94 (0.75--1.17)    & 0.82 (0.59--1.14)    & 0.86 (0.46--1.61)    & 0.98 (0.43--2.26)    & 0.84 (0.67--1.04)                                                                 \\ \hline
+\end{tabular}
+\end{adjustbox}
+\end{sidewaystable}

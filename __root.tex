@@ -1,0 +1,174 @@
+% ---------------------------------------------------------
+% Project: PhD KAPPA
+% File: __root.tex
+% Author: Andrea Discacciati
+%
+% Purpose: Root latex file, run this to typeset the kappa!
+% ---------------------------------------------------------
+
+% Class
+\documentclass[11pt,a4paper,twoside,openany]{book}
+
+% Packages
+\usepackage{coffee4}
+\usepackage{lipsum}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{threeparttable}
+\usepackage{adjustbox}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{flafter}
+\usepackage{fancyhdr}
+\usepackage{textcomp}
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
+\usepackage[pdftex,
+            pdfauthor={Andrea Discacciati},
+            pdftitle={Risk factors for prostate cancer: 
+            		analysis of primary data, pooling, and related
+           			methodological aspects},
+            pdfcreator={LaTeX2e}]{hyperref}
+\usepackage[%showframe,
+			headheight=13.6pt,
+			%headsep=,
+			%footskip=,
+			bindingoffset=0cm,%print=.5cm, web=0cm
+			left=3cm,  %print=2cm, web=3cm
+			bottom=3cm, %print=3cm, web=3cm
+			top=3cm, %print=3cm, web=3cm,
+			right=3cm]{geometry} %print=3.5cm, web=3cm
+\usepackage{enumerate, mdwlist}
+\usepackage{etoolbox}
+\usepackage{tabularx}
+\usepackage{stata}
+\usepackage{rotating}
+\usepackage[font={small}]{caption}
+\usepackage{chngcntr}
+\counterwithout{footnote}{chapter}
+
+% Draft Watermark
+\iffalse
+\usepackage[printwatermark]{xwatermark}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+\newsavebox\mybox
+\savebox\mybox{\tikz[color=gray,opacity=0.3]\node{\textsf{DRAFT}};}
+\newwatermark*[
+  allpages,
+  angle=45,
+  scale=16,
+  xpos=-70,
+  ypos=60
+]{\usebox\mybox}
+\fi
+%
+
+ %---begin see http://www.khirevich.com/latex/font/
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100, stretch=10,shrink=10]{microtype}
+\usepackage[T1]{fontenc}
+\usepackage[bitstream-charter]{mathdesign}
+\usepackage{sectsty}
+	\chapterfont{\usefont{T1}{qhv}{b}{n}\selectfont\huge}
+\usepackage{titlesec}
+	\input{_titlesec}
+\usepackage{tocloft}
+	\input{_tocloft}
+%---end see http://www.khirevich.com/latex/font/
+
+% Header / footer
+\input{_fancyhdr}
+
+% Substitutions
+\newcommand{\rveplot}{decorrelated-residuals--versus--exposure plot}
+\newcommand{\kgmsq}{kg$\times$m\textsuperscript{$-2$}}
+\newcommand{\ngml}{ng$\times$ml\textsuperscript{$-1$}}
+
+\defcitealias{discacciati_body_2011}{Paper~I}	
+\defcitealias{bellavia_using_2015}{Paper~II}	
+\defcitealias{discacciati_interpretation_2015}{Paper~III}	
+\defcitealias{discacciati_body_2012}{Paper~IV}	
+\defcitealias{discacciati_goodness_2015}{Paper~V}	
+
+%\doublespacing 
+\onehalfspacing
+
+\allowdisplaybreaks
+
+\renewcommand{\sfdefault}{qhv}
+\newcommand*{\LargerCdot}{\raisebox{-0.25ex}{\scalebox{1.2}{$\cdot$}}}
+
+\DeclareMathOperator{\Cov}{Cov} 
+\DeclareMathOperator{\diag}{diag} 
+\DeclareMathOperator{\N}{N} 
+\DeclareMathOperator{\SIR}{SIR} 
+\DeclareMathOperator{\SMR}{SMR} 
+\DeclareMathOperator{\RAP}{RAP} 
+\DeclareMathOperator{\E}{E}
+\DeclareMathOperator{\logit}{logit} 
+\DeclareMathOperator{\df}{df} 
+
+\hyphenation{logRRs}
+\hyphenation{logRR}
+
+\addto\captionsenglish{%
+  \renewcommand{\bibname}{References}%
+}
+
+%\includeonly{abstract, results, introduction, background, aims, discussion, conclusions }
+
+%--- Kappa starts here! ---%
+\begin{document}
+
+% Front matter
+\frontmatter
+\pagestyle{nothing}
+\include{titlepage}
+\include{spikblad}
+\cleardoublepage
+\include{dedication}
+\cleardoublepage 
+\pagestyle{frontmatter}
+\include{abstract}
+\cleardoublepage
+\include{publications}
+\cleardoublepage
+\microtypesetup{protrusion=false}
+\tableofcontents
+%\listoffigures
+%\newpage
+%\listoftables
+\microtypesetup{protrusion=true} 
+\include{abbreviations}
+
+% Main matter
+\mainmatter
+\pagestyle{mainmatter}
+\include{introduction}
+\include{background}
+\include{aims}
+\include{materials}
+\include{results}
+\include{discussion}
+\include{conclusions}
+\include{future}
+
+% Appendix
+\appendix
+\include{appendix}
+
+% Back matter
+\backmatter
+\bibliographystyle{sj}
+\refstepcounter{chapter}
+\addcontentsline{toc}{chapter}{\bibname}
+\bibliography{kappa}
+\newpage
+\pagestyle{nothing}
+\include{acknowledgements}
+
+
+\end{document}

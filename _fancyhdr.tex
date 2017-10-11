@@ -1,0 +1,51 @@
+% ---------------------------------------------------------
+% Project: PhD KAPPA
+% File: _fancyhdr.tex
+% Author: Andrea Discacciati
+%
+% Purpose: Header and footer settings
+%			(see fancyhdr package)
+% ---------------------------------------------------------
+
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{%
+ \markboth{{\thechapter.\ #1}}{}}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyhf[lef,rof]{}%
+  %\fancyhead[LE,RO]{\thepage}
+}
+
+\fancypagestyle{frontmatter}{%
+  \renewcommand{\headrulewidth}{0pt} 
+  \renewcommand{\footrulewidth}{0pt}
+  \fancyhf{}% Clear header/footer
+  \fancyhead[LE,RO]{}
+}
+
+\fancypagestyle{nothing}{%
+  \renewcommand{\headrulewidth}{0pt} 
+  \renewcommand{\footrulewidth}{0pt}
+  \fancyhf{}% Clear header/footer
+  \fancyhead[LE,RO]{}%
+}
+
+\fancypagestyle{mainmatter}{%
+  \renewcommand{\headrulewidth}{.4pt}
+  \renewcommand{\footrulewidth}{0pt}
+  \fancyhf{}% Clear header/footer
+  \fancyhead[LE,RO]{\thepage}
+  \fancyhead[RE,LO]{\nouppercase \leftmark}
+}
+
+	
+% See 'writing a thesis with latex' p25 
+% Writes nothing on empty pages
+\makeatletter
+\def\cleardoublepage{\clearpage\if@twoside
+\ifodd\c@page
+\else\hbox{}\thispagestyle{empty}\newpage
+\if@twocolumn\hbox{}\newpage\fi\fi\fi}
+\makeatother

@@ -1,0 +1,34 @@
+% ---------------------------------------------------------
+% Project: PhD KAPPA
+% File: _tocloft.tex
+% Author: Andrea Discacciati
+%
+% Purpose: Table of Contents, 
+%			List of Figures, List of Tables format
+%			(see tocloft package)
+% ---------------------------------------------------------
+
+\renewcommand{\cfttoctitlefont} % ToC title
+             {\usefont{T1}{qhv}{b}{n}\selectfont\huge}
+\renewcommand{\cftchapfont} % chapter titles
+             {\usefont{T1}{qhv}{b}{n}\selectfont}
+\renewcommand{\cftsecfont} % section titles
+             {\usefont{T1}{bch}{m}{n}\selectfont}
+\renewcommand{\cftsubsecfont} % subsection titles
+             {\usefont{T1}{bch}{m}{n}\selectfont} 
+\renewcommand{\cftchappagefont} % chapter page numbers
+             {\usefont{T1}{bch}{b}{n}\selectfont}
+\renewcommand{\cftsecpagefont} % section page numbers
+             {\cftsecfont} 
+\renewcommand{\cftsubsecpagefont} % subsection page numbers
+             {\cftsubsecfont}
+             
+\renewcommand{\cftloftitlefont} % LoF title
+             {\usefont{T1}{qhv}{b}{n}\selectfont\huge}
+\renewcommand{\cftfigfont} % Figures titles
+             {\usefont{T1}{bch}{m}{n}\selectfont}
+             
+\renewcommand{\cftlottitlefont} % LoT title
+             {\usefont{T1}{qhv}{b}{n}\selectfont\huge}
+\renewcommand{\cfttabfont} % Tables titles
+             {\usefont{T1}{bch}{m}{n}\selectfont}

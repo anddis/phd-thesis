@@ -1,0 +1,106 @@
+% ---------------------------------------------------------
+% Project: PhD KAPPA
+% File: discussion.methods.tex
+% Author: Andrea Discacciati
+%
+% Purpose: Percentile + RAP + GOF meta (discussion)
+% ---------------------------------------------------------
+
+
+
+\section{Survival percentiles when age at the event is the relevant time scale}
+
+When describing survival data from observational epidemiologic studies, the standard approach is to focus on the hazard function, while differences in survival between groups of individuals are usually summarized by means of HRRs. The reason for the ubiquitous presence of HRRs in the epidemiologic literature is arguably due to the wide availability of statistical tools to directly model the hazard as a function of some covariates of interest, and not  to the fact that HRRs are inherently ``better'' measures of association than others \citep{hernan_hazards_2010, uno_moving_2014}.
+
+A different approach to describe survival data consists in focusing on survival percentiles, which thoroughly describe the distribution of survival time. Survival percentiles provide the link between the proportion of study subjects that has experienced the event of interest and the time by which that proportion is reached. 
+
+As survival percentiles can be obtained from survival curves, both hazard models and the Kaplan-Meier estimator can be utilized to ``indirectly'' estimate them.\footnote{The word ``indirectly'' is used to highlight the fact that, both in the case of hazard models and Kaplan-Meier estimator, what is actually being estimated are survival probabilities given study time.} As seen in section \ref{sec:phapproach}, however, calculating survival curves following PH models can sometimes give a ``misleading impression'' \citep{kalbfleisch_statistical_2002} and is impractical if one wants to relax the PH assumption by employing time-dependent coefficients.  Moreover, calculation of confidence intervals for survival percentiles obtained in this way is not straightforward \citep{burr_comparison_1994, lai_confidence_2006}. The Kaplan-Meier estimator, on the other hand, is often inadequate in the context of observational epidemiology, where modeling is generally preferred over simple stratification. 
+
+Quantile regression for censored data, on the other hand, focuses directly on survival percentiles  posing no restrictions on the shape of the survival function and offers all those advantages of statistical modeling that are so important in the analysis of observational data.
+
+In \citetalias{bellavia_using_2015}, we proposed an intuitive and simple approach to extend the use of Laplace regression to those situations in which investigators want to use age as the underlying time scale. We showed that delayed entries, introduced by the change in the time scale, complicate the interpretation of survival percentiles obtained from survival curves. In fact, in the presence of delayed entries, it is no longer true that the $100p$-th percentile of attained age, say $a(p)$, can be interpreted as the age by which $100p\%$ of the study population has experienced the event of interest. It may even occur, for example, that by age $a(p)$ less than $100p\%$ of study participants have been enrolled in the study.
+
+By conditioning the quantile regression model on age at entry (baseline age), the $100p$-th survival percentile of age at the event can now be interpreted as the age by which $100p\%$ of the study participants have experienced the event, given a fixed baseline age. Moreover, the model coefficients express the difference in the $100p$-th percentile of age at the event between exposed and unexposed individuals, always conditional on baseline age. We think that this extension can be particularly useful for the analysis of observational studies, where attained age is often a more meaningful and natural time scale than time elapsed since some arbitrary baseline event. 
+
+As previously written, survival percentiles thoroughly describe the distribution of survival time, and likewise PDs give a full picture of the differences in the distribution of age-at-event between exposed and unexposed individuals. This can be, however, a double-edged sword. In fact, unless one is interested in a pre-specified PD (as it could be the case for clinical trials), the richer picture provided by PDs also requires more information to be reported (in terms of figures, words and/or numbers). Focusing on  one single arbitrary chosen PD  can give a ``misleading impression'' of the association just like reporting one single HRR when the PH does not seem to hold. In the illustrative example in \citetalias{bellavia_using_2015}, we reported differences in the 25th, 50th, and 75th percentiles of age at death according to smoking status for this reason.
+
+\subsubsection{Laplace regression}
+
+Among the different available methods for quantile regression for censored data, in this thesis and in \citetalias{bellavia_using_2015}, we employed Laplace regression, whose principal characteristic is probably the Laplacian distributional assumption of the error term. This assumption is shared by other methods for quantile regression \citep{liu_mixedeffects_2009, farcomeni_quantile_2010, lee_bayesian_2010, yuan_bayesian_2010}. Other proposed techniques do not make distributional assumptions on the error term but are subject to other assumptions, such as global linearity \citep{portnoy_censored_2003, peng_survival_2008}, not required by Laplace regression. The method by \citet{wang_locally_2009} overcomes the global-linearity assumption but its computational algorithm requires subjectively setting a smoothing function, which may ultimately have an impact on inference.
+
+ Laplace regression has been observed to be robust to violations of the Laplacian distributional assumption. In simulation studies where the error term was generated from a number of different distributions --- including normal, lognormal, Student's $t$, and exponential distribution --- the performances of the Laplace estimator in terms of bias and coverage were observed to be remarkably good, even at high quantiles and with large rates of censoring \citep{bottai_laplace_2010,bottai_authors_2011,bottai_command_2013,bottai_gradient_2015}. 
+
+\section{Risk and rate advancement periods}
+
+RAP reflects the exposure impact in the timing of the disease occurrence. For rates, RAP quantifies how much sooner $e_1$-exposed individuals reach the same IR of a certain disease as $e_0$-exposed individuals, under the assumptions of a monotonically increasing age-disease association and disease-free survival to baseline age. 
+
+The fact that RAP is a time-based measure of exposure impact makes it very appealing in risk communication. For example, in a recent paper published in the British Medical Journal, \citet{mons_impact_2015} wrote that ``risk communication is [...] crucial [...] and risk advancement periods could be easier to grasp for the general public than other epidemiologic risk measures such as relative risks of years of life lost''. Whether this is actually true or not remains to be seen, as no empirical evidence on the usefulness of RAP in risk communication with lay audiences has been collected yet.
+
+What we have observed, however, is the fact that correct interpretation of RAP has eluded many of the studies that have employed this measure so far. In particular, we have identified three major conceptual problems. First, equating RAP with the difference in mean survival time; second, interpreting RAP as the time by which the survival curve for the $e_1$-exposed individuals is shifted with respect to the survival curve for the $e_0$-exposed individuals; third, equating the RAP concept to that of RRs. Furthermore, we have highlighted a too often neglected statistical problem, which is the high sensitivity of RAP estimates to the form of the age-disease association. All these problems can be quite serious in realistic examples.
+
+The reason why RAP has been repeatedly misinterpreted  in the literature is most likely multi-factorial, but a possible explanation is that RAP is a measure involving three variables (exposure, baseline age, and binary outcome) instead of two as traditional measures of association. As RAP evaluates the impact of the exposure on the relation of age to the outcome, it is more similar to an interaction measure than to a measure of association, although it is not equivalent to a product term in the model. This supplementary complexity might partially explain why RAP has been repeatedly misinterpreted.
+
+\subsubsection{RAP in prostate cancer epidemiology} 
+
+A crucial assumption for sensible use of RAP is that the rate of the outcome strictly increases with age, given exposure and confounders. If this assumption is not met, one should avoid use of RAP. As seen in the COSM  (figure \ref{fig:ir_cosm}) and in other populations \citep{ferlay_cancer_2015}, the incidence of prostate cancer  increases until around 70--74 years of age and declines thereafter. This is likely due to less use of PSA-testing in men over 80 years of age \citep{williams_prostatespecific_2011} and, at the same time, to a constant increase over time in PSA-testing among younger men   \citep{salinas_prostate_2014}. Although the reasons behind the non-monotonicity of the age-incidence curve are unlikely to be biological, this limits  the application of RAP in this context. A possible solution is to restrict RAP analysis to men younger than 70--74 years of age to ensure that the assumption of a monotonic increase in disease rate over age holds.
+
+In contrast, the monotonicity assumption seems to hold for prostate cancer mortality \citep{ferlay_cancer_2015}. In the example reported in section \ref{sec:example_rap_bmi} using data from the COSM, obese men were observed to experience the same prostate cancer MR over the follow-up period 1998--2012 as that of normal-weight men who were 18 months older at baseline. Despite the lack of evidence of a non-linear association between age and log--mortality rate of prostate cancer, RAP estimates were somewhat sensitive to the functional form with which baseline age entered into the model. 
+
+Lastly, interpretation of RAP as the time period by which attainment of a particular rate level can be postponed by eliminating the exposure requires the (conditional) independence of the study disease from competing events. As \citet{brenner_risk_1993} wrote ``this limitation is negligible if the RAP is derived for young and middle-aged individuals and if the RAP is not too long''. In the case of prostate cancer mortality, on the other hand, since the vast majority of men dying of the disease are elderly, interpretation of RAP estimates becomes more theoretical.
+
+
+
+%--
+
+\section{Goodness of fit assessment in dose--response meta-analysis}
+
+\subsection{Why goodness of fit assessment is important}
+
+Statistical modeling in the context of dose--response meta-analysis can be thought of as `descriptive modeling' \citep{rosenthal_statistical_1985, shmueli_explain_2010}. Citing the words by \citet{shmueli_explain_2010} ``this type of modeling is aimed at summarizing or representing the data structure in a compact manner''. %This as opposed to `explanatory modeling' and to `predictive modeling' \citep{shmueli_explain_2010}.
+
+In order to give a fair representation of the data structure --- that is, of the information regarding a certain dose-risk relation --- one should make sure that the posited dose--response meta-analysis models actually provide an adequate description of the data at hand. Therefore, we argue that the natural `third stage' of a dose--response meta-analysis should be the evaluation of its goodness of fit, which can be done in practice by measuring the degree of agreement between fitted and observed data. 
+
+A poor fit can  raise doubts about the ability of a certain model to summarize the available data or as \citet{greenland_invited_1994} put it ``if one views statistical estimates as data summaries, then one can view significant lack of fit as a warning that the fitted model structure and model-based estimates are poor data summaries''.
+
+Despite its importance, however, the issue of how to evaluate goodness of fit of dose--response meta-analysis models has, to the best of our knowledge, never been specifically addressed. As a consequence, assessment of the goodness of fit  is rarely, if ever, carried out in practice. As \citet{sutton_recent_2008} pointed out “little formal assessment of the goodness-of-fit of meta-analysis models to the data is carried out. This may be partly because many non-statisticians conduct meta-analysis, and to such applied researchers meta-analysis may be seen as a necessary data-processing procedure rather than a model-fitting exercise”. 
+
+The aforementioned degree of agreement has been sometimes evaluated by simply overlaying the study-specific RRs to the pooled dose--response curve \citep[see, for example,][]{wcrf_continuous_2014, liao_blood_2015}. However, although praiseworthy, this approach can be highly misleading as the correlation among the reported logRRs means that even a well-fitting dose--response curve might not pass through the data points. This was clearly illustrated, in the simple case of trend estimation for one single study, in figure \ref{fig:visual_wrong}. 
+
+Furthermore, study-specific dose--response relations are sometimes illustrated by plotting the reported RRs at their assigned doses and connecting them with straight lines (segments) \citep{wcrf_continuous_2014}. This can be misleading for the very same reasons given above. In fact, visually inferring the dose--response relation from this kind of plot may lead to wrong conclusions, given the that the correlation between RRs is not taken into account.  
+
+
+\subsubsection{A digression on goodness of fit}
+
+The statistical modeling carried out for the description of COSM data and for the comparison with Swedish national data (section \ref{sec:materialsepi}) can also be viewed as descriptive modeling and the same considerations about goodness of fit apply. In fact, we overlaid to the model predictions the observed (summarized) data, so that the goodness of fit of the models could be, at least qualitatively, evaluated.
+
+Statistical modeling in \citetalias{discacciati_body_2011}, on the other hand, was aimed at `explaining' --- that is, testing hypotheses about theoretical constructs \citep{shmueli_explain_2010}. In `explanatory modeling' one is not usually interested in assessing the overall absolute goodness of fit of a model, as ``the fit of the model must be evaluated only against the specific part of the variation [of the outcome] which is relevant to the subset of effects of interest. An overall test of the model fit is too general for this purpose and does not answer the right question'' \citep{hagquist_goodness_1998}.
+
+
+\subsection{Deviance, coefficient of determination, and visual assessment}
+
+To highlight the need of assessing the goodness of fit in dose--response meta-analysis, we presented and discussed in \citetalias{discacciati_goodness_2015} three goodness of fit tools (deviance, coefficient of determination, and \rveplot). These tools can be useful for testing, quantifying, and visually displaying the fit of dose--response meta-analysis models while taking into account the correlation structure of the study-specific logRRs. 
+
+The examples given in \citetalias{discacciati_goodness_2015} and in section \ref{sec:examplegof} showed how these tools can give important indications regarding the fit of the candidate models. In particular, these tools can help identify dose--response patterns, investigate sources of heterogeneity, and eventually assess wether the pooled dose--response association adequately summarizes the published results. Their use can strengthen the conclusion drawn from a dose--response meta-analysis or, conversely, raise doubts about its ability to describe in an adequate manner the available evidence. However, one should also be aware that these tools come with some  limitations.% and, more in general, that goodness of fit assessment is not an easy task to carry out.
+
+
+\subsubsection{Limitations and caveats}
+
+First, while a small $p$-value from the test for model specification (deviance) is an indication that the considered model fails at explaining the observed variation in the reported logRRs, a large $p$-value shall not lead to the conclusion that the model adequately explains all the observed variability. Moreover, although a small $p$-value is an indication that the the tested model is unsatisfactory and needs to be modified (or completely replaced), it provides no indication as to how to proceed. Lastly, a major drawback of all global tests of fit is their low power to detect problems in the model \citep{hosmer_comparison_1997}.
+
+Second, when the dose--response meta-analysis models are specified in a data-dependent fashion (also known as data dredging), $p$-values from the global goodness of fit cannot be formally regarded as valid.
+
+Third, although a $R^2=1$ does correspond to a perfect fit, interpreting a low coefficient of determination is more complicated. In fact, $R^2$ can be close to 0 because of different reasons: the model fits poorly the data, the  exposure and the logRRs are not associated, or simply  --- even under the ``correct'' model --- the GRSS is close to the GTSS.
+
+Fourth, the interpretation of the \rveplot{} is based on the visual recognition of patterns in the distribution of the decorrelated residuals by levels of the exposure, which is a subjective experience \citep{greenland_invited_1994}. In the extreme situation of sparse data, the meta-analyst can ``recognize'' almost any pattern in the plot.
+
+%All these limitations are particularly relevant if one wants to assess the goodness of fit of study-specific dose--response models.
+
+In conclusion, a good fit alone does not imply that the ``correct'' model has been selected. In extreme cases, especially when the number of data points is small, very different pooled dose--response curves may appear to be equally satisfactory from a goodness-of-fit point of view. This is not surprising, as it simply reflects the fact that the total amount of available information is limited. In such cases, subject matter knowledge --- that is, prior information --- will play a crucial role in selecting the final model. At the same time, goodness of fit assessment can help to weed out those models that fail at adequately summarizing the available evidence.
+
+
+
+
+
+
+
+
